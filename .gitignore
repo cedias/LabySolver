@@ -1,0 +1,15 @@
+#binaries - compiled sources#
+*.class
+#Diagram Data#
+*.dnx
+*.png
+# Eclipse Data #
+.metadata/
+.project
+.classpath
+#svn files#
+.svn/
+# Package Files #
+*.jar
+*.war
+*.ear

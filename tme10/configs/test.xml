@@ -1,0 +1,7 @@
+<Configuration>
+<parameter name='NombreRegles' value='6'/>
+<parameter name='PathLaby' value='all_in.mze'/>
+<parameter name='TaillePopulation' value='1'/>
+<parameter name='NombrePas' value='1000'/>
+<parameter name='NombreGen' value='932'/>
+</Configuration>
