@@ -58,7 +58,7 @@ public class Regles extends JFrame {
 		int i = 0;
 		while(i < listR.size()){
 		listCond.add(properString(listR.get(i).toString()));
-		listCondDir.add(i +") " +properString(listR.get(i).toString())+ " Dir :" + listR.get(i).getAction().toString());
+		listCondDir.add(i +") " +properString(listR.get(i).toString()));
 			i++;
 		}
 		createButtons();
@@ -129,6 +129,7 @@ public class Regles extends JFrame {
 		add.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				addRegle();
+				add.setSelected(false);
 			}
 		});
 		remove = new JButton();
@@ -197,10 +198,25 @@ public class Regles extends JFrame {
 	}	
 	
 	public void buttonDir(CaseButtonBis source) {
-	 System.out.println("direction");
-	}
+		Direction d = listR.get(currentRegleNb).getAction();
+		switch(d){
+		case BAS : 		d = Direction.GAUCHE; 	break;
+		case HAUT :		d = Direction.DROITE;	break;	
+		case GAUCHE : 	d = Direction.HAUT	;	break;
+		case DROITE : 	d = Direction.BAS	;	break;
+	default:
+		break;
+		}
+		String s = listCond.get(currentRegleNb);
+		Regle r = new Regle(new Observation(s),d);
+		listCond.set(currentRegleNb,properString(r.toString()));
+		listCondDir.set(currentRegleNb,currentRegleNb +") " + s);
+		listR.set(currentRegleNb,r);
+		updateGraphics(r);
+		}
 	
 	public void buttonAction(CaseButtonBis c){
+		Direction d = listR.get(currentRegleNb).getAction();
 		if(c.getNb()==4){	
 		}
 		String s = listCond.get(currentRegleNb);
@@ -208,9 +224,9 @@ public class Regles extends JFrame {
 			return;
 		}
 		s = s.substring(0, c.getNb()) + swap + s.substring(c.getNb()+1);
-		Regle r = new Regle(new Observation(s),Direction.BAS);
+		Regle r = new Regle(new Observation(s),d);
 		listCond.set(currentRegleNb,properString(r.toString()));
-		listCondDir.set(currentRegleNb,currentRegleNb +") " + s + " Dir :" + listR.get(currentRegleNb).getAction().toString());
+		listCondDir.set(currentRegleNb,currentRegleNb +") " + s);
 		listR.set(currentRegleNb,r);
 		updateGraphics(r);
 		updateComboBox();
@@ -255,7 +271,7 @@ public class Regles extends JFrame {
 		Regle nouv = new Regle(new Observation("........"), Direction.BAS);
 		listR.add(nouv);
 		listCond.add(properString(listR.get(listR.size()-1).toString()));
-		listCondDir.add(listR.size()-1 +") " +properString(listR.get(listR.size()-1).toString())+ " Dir :" + listR.get(listR.size()-1).getAction().toString());
+		listCondDir.add(listR.size()-1 +") " +properString(listR.get(listR.size()-1).toString()));
 		currentRegleNb = listR.size()-1;
 		updateComboBox();
 		updateGraphics(nouv);
@@ -324,7 +340,7 @@ public class Regles extends JFrame {
 		int i = 0;
 		while(i < listR.size()){
 		listCond.add(properString(listR.get(i).toString()));
-		listCondDir.add(i +") " +properString(listR.get(i).toString())+ " Dir :" + listR.get(i).getAction().toString());
+		listCondDir.add(i +") " +properString(listR.get(i).toString()));
 		i++;
 		}
 	}
