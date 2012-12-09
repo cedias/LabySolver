@@ -141,10 +141,19 @@ public class ConfigGenPanel extends JPanel {
 			{
 				if (calculThread != null)
 					calculThread.interrupt();
-				
+				cardLayout.show(cardPanel, "progressPanel");
 				calculThread  = new CalculThread(stepSlider.getValue(),nbRulesSlider.getValue(),generationSlider.getValue(),individuSlider.getValue(),progressPanel,laby);
-	
+				Thread r = new Thread(new Runnable(){
+					public void run() {
+						while(calculThread.isAlive()){};
+						controleur =  calculThread.getControleur();
+						reachedPointsValue.setText(calculThread.getReachedPointsValue() + " Points");
+						efficacityValue.setText(calculThread.getEfficacityValue() + "%");
+						cardLayout.show(cardPanel, "rightPanel");
+					}
+				});
 				calculThread.start();
+				r.start();
 			}
 		};
 		

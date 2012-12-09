@@ -32,6 +32,7 @@ public class CalculThread extends Thread {
 
 
 	public void run(){
+		progressPanel.setNbMax(nbGen);
 		progressPanel.setValue(0);
 		Population<Controleur> pop = PopulationControleurFactory.createRandomPopulation(nbInv,nbRules);
 		Environnement<Controleur> env = PopulationControleurFactory.createEnvironnement(laby,nbSteps);
@@ -40,7 +41,6 @@ public class CalculThread extends Thread {
 			progressPanel.setValue(i);
 			pop = pop.evoluer(env);
 		}
-		System.out.println("the run is done");
 		controleur =  (ControleurIndividuAdapter)pop.get(0);
 		reachedPointsValue = ((int)pop.get(0).getFitness());
 		efficacityValue = (pop.get(0).getFitness()/laby.getNbPoints()*100) ;
