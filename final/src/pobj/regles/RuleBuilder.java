@@ -30,24 +30,18 @@ public class RuleBuilder extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private CaseButtonBis[] cases;
 	private JButton mur , point , vide , any , add , remove;
-	private char swap;
+	private char swap = '#';
 	private ArrayList<String>listCond =  new ArrayList<String>();
 	private ArrayList<String>listCondDir  = new ArrayList<String>();
 	private ArrayList<Regle>listR;
 	private  final int[] order = {7,0,1,6,2,5,4,3,8};
-	//private  final ArrayList<Direction> directions ;
-	private JComboBox<ArrayList<String>> optionList;
+	private JComboBox<String> optionList;
 	JPanel listPanel , sidePanel , buttonPanel , secPanel;
-	private int currentRegleNb;
+	private int currentRegleNb = 0;
 
 
 	public RuleBuilder(ArrayList<Regle> r){
 		super();
-	//	directions = new ArrayList<Direction>();
-		//directions.add(Direction.BAS);
-		//directions.add(Direction.GAUCHE);
-		//directions.add(Direction.HAUT);
-		//directions.add(Direction.DROITE);
 		this.setLayout(new GridLayout(1,2));
 		listR = r;	
 		int i = 0;
@@ -60,8 +54,6 @@ public class RuleBuilder extends JFrame {
 		createButtons();
 		sidePanel();
 		updateGraphics(listR.get(0));
-		currentRegleNb = 0;
-		swap = '#';
 		this.setVisible(true);
 		this.pack();		
 	}
@@ -145,14 +137,16 @@ public class RuleBuilder extends JFrame {
 	
 	private void listPanel(){
 		listPanel = new JPanel();
-		optionList = new JComboBox<ArrayList<String>>();
-		optionList.addItem(listCondDir);
+		optionList = new JComboBox<String>();
+		for(int i = 0 ; i < listCondDir.size() ; i++ ){
+			optionList.addItem(listCondDir.get(i));
+		}
 		optionList.setPreferredSize(new Dimension(200,30));
 		listPanel.add(optionList);
 		optionList.addActionListener(new ActionListener()
 		    {
 		    	  public void actionPerformed(ActionEvent e) {
-		    	        JComboBox<Object> cb = (JComboBox<Object>)e.getSource();
+		    	        JComboBox<String> cb = (JComboBox<String>)e.getSource();
 		    	        int ruleNb = cb.getSelectedIndex();
 		    	        currentRegleNb=ruleNb;
 		    	        updateGraphics(listR.get(ruleNb));
@@ -201,33 +195,33 @@ public class RuleBuilder extends JFrame {
 	}	
 	
 	public void buttonDir(CaseButtonBis source) {
-		Direction d = listR.get(currentRegleNb).getAction();
-		switch(d){
+		Direction dir = listR.get(currentRegleNb).getAction();
+		switch(dir){
 			case BAS : 		
-				d = Direction.GAUCHE; 	
+				dir = Direction.GAUCHE; 	
 				break;
 				
 			case HAUT :		
-				d = Direction.DROITE;	
+				dir = Direction.DROITE;	
 				break;	
 			case GAUCHE : 	
-				d = Direction.HAUT;	
+				dir = Direction.HAUT;	
 				break;
 			case DROITE : 	
-				d = Direction.BAS;	
+				dir = Direction.BAS;	
 				break;
 		default:
 			break;
 		}
 		
-		String s = listCond.get(currentRegleNb);
-		Regle r = new Regle(new Observation(s),d);
+		String description = listCond.get(currentRegleNb);
+		Regle r = new Regle(new Observation(description),dir);
 		
 		listCond.set(currentRegleNb,properString(r.toString()));
-		listCondDir.set(currentRegleNb,currentRegleNb +") " + s);
+		listCondDir.set(currentRegleNb,currentRegleNb +") " + description);
 		listR.set(currentRegleNb,r);
-		
-		updateGraphics(r);
+		optionList.insertItemAt(listCondDir.get(currentRegleNb), currentRegleNb);
+		//updateGraphics(r);
 		}
 	
 	public void buttonAction(CaseButtonBis c){
@@ -244,7 +238,6 @@ public class RuleBuilder extends JFrame {
 		listCondDir.set(currentRegleNb,currentRegleNb +") " + s);
 		listR.set(currentRegleNb,r);
 		updateGraphics(r);
-		updateComboBox();
 	}
 	
 	public static  String properString(String s){
@@ -278,7 +271,12 @@ public class RuleBuilder extends JFrame {
 			currentRegleNb = 0;
 		}
 		updateStringList();
-		updateComboBox();
+		for(int i = 0 ; i < listCondDir.size() ; i++){
+			optionList.removeItemAt(i);
+			optionList.insertItemAt(listCondDir.get(i), i);
+		}
+		optionList.removeItemAt(listCondDir.size());
+		optionList.setSelectedIndex(currentRegleNb);
 		updateGraphics(listR.get(currentRegleNb));
 	}
 	
@@ -288,7 +286,8 @@ public class RuleBuilder extends JFrame {
 		listCond.add(properString(listR.get(listR.size()-1).toString()));
 		listCondDir.add(listR.size()-1 +") " +properString(listR.get(listR.size()-1).toString()));
 		currentRegleNb = listR.size()-1;
-		updateComboBox();
+		optionList.addItem(listCondDir.get(currentRegleNb));
+		optionList.setSelectedIndex(currentRegleNb);
 		updateGraphics(nouv);
 	}
 	
@@ -329,29 +328,6 @@ public class RuleBuilder extends JFrame {
 			}
 		}
 		repaint();
-	}
-	
-	
-	// USE insertItemAt et removeItemAt
-	
-	
-	private void updateComboBox(){
-		sidePanel.remove(listPanel);
-		listPanel = new JPanel();
-		optionList = new JComboBox<Object>();
-		optionList.addItem(listCondDir);
-		optionList.setPreferredSize(new Dimension(200,30));
-		optionList.setSelectedIndex(currentRegleNb);
-		listPanel.add(optionList);
-		sidePanel.add(listPanel);
-		optionList.addActionListener(new ActionListener()
-		    {
-		    	  public void actionPerformed(ActionEvent e) {
-		    	        JComboBox cb = (JComboBox)e.getSource();
-		    	        int ruleNb = cb.getSelectedIndex();
-		    	        currentRegleNb=ruleNb;
-		    	        updateGraphics(listR.get(ruleNb));
-		    }});
 	}
 	
 	private void updateStringList(){
