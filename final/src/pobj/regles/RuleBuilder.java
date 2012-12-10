@@ -28,14 +28,24 @@ public class RuleBuilder extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private JComboBox<String> optionList;
 	private CaseButtonBis[] cases;
-	private JButton mur , point , vide , any , add , remove;
+	private JButton mur ;
+	private JButton point ; 
+	private JButton vide ;
+	private JButton any ;
+	private JButton add ;
+	private JButton remove;
+	
 	private char swap = '#';
+	
 	private ArrayList<String>listCond =  new ArrayList<String>();
 	private ArrayList<String>listCondDir  = new ArrayList<String>();
 	private ArrayList<Regle>listR;
+	
 	private  final int[] order = {7,0,1,6,2,5,4,3,8};
-	private JComboBox<String> optionList;
+
 	JPanel listPanel , sidePanel , buttonPanel , secPanel;
 	private int currentRegleNb = 0;
 
