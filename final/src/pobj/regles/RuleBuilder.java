@@ -1,22 +1,19 @@
 package pobj.regles;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
+
 
 import agent.control.Direction;
 import agent.control.Observation;
@@ -24,7 +21,7 @@ import agent.control.Regle;
 import agent.laby.ContenuCase;
 import agent.laby.interf.CaseButtonBis;
 
-public class Regles extends JFrame {
+public class RuleBuilder extends JFrame {
 
 	
 	/**
@@ -34,31 +31,30 @@ public class Regles extends JFrame {
 	private CaseButtonBis[] cases;
 	private JButton mur , point , vide , any , add , remove;
 	private char swap;
-	private ArrayList<String>listCond;
-	private ArrayList<String>listCondDir;
+	private ArrayList<String>listCond =  new ArrayList<String>();
+	private ArrayList<String>listCondDir  = new ArrayList<String>();
 	private ArrayList<Regle>listR;
 	private  final int[] order = {7,0,1,6,2,5,4,3,8};
-	private  final ArrayList<Direction> directions ;
-	private JComboBox optionList;
+	//private  final ArrayList<Direction> directions ;
+	private JComboBox<ArrayList<String>> optionList;
 	JPanel listPanel , sidePanel , buttonPanel , secPanel;
 	private int currentRegleNb;
 
 
-	public Regles(ArrayList<Regle> r){
+	public RuleBuilder(ArrayList<Regle> r){
 		super();
-		directions = new ArrayList<Direction>();
-		directions.add(Direction.BAS);
-		directions.add(Direction.GAUCHE);
-		directions.add(Direction.HAUT);
-		directions.add(Direction.DROITE);
+	//	directions = new ArrayList<Direction>();
+		//directions.add(Direction.BAS);
+		//directions.add(Direction.GAUCHE);
+		//directions.add(Direction.HAUT);
+		//directions.add(Direction.DROITE);
 		this.setLayout(new GridLayout(1,2));
-		listR = r;
-		listCond = new ArrayList<String>();
-		listCondDir =new ArrayList<String>();
+		listR = r;	
 		int i = 0;
+		
 		while(i < listR.size()){
-		listCond.add(properString(listR.get(i).toString()));
-		listCondDir.add(i +") " +properString(listR.get(i).toString()));
+			listCond.add(properString(listR.get(i).toString()));
+			listCondDir.add(i +") " +properString(listR.get(i).toString()));
 			i++;
 		}
 		createButtons();
@@ -149,13 +145,14 @@ public class Regles extends JFrame {
 	
 	private void listPanel(){
 		listPanel = new JPanel();
-		optionList = new JComboBox(listCondDir.toArray());
+		optionList = new JComboBox<ArrayList<String>>();
+		optionList.addItem(listCondDir);
 		optionList.setPreferredSize(new Dimension(200,30));
 		listPanel.add(optionList);
 		optionList.addActionListener(new ActionListener()
 		    {
 		    	  public void actionPerformed(ActionEvent e) {
-		    	        JComboBox cb = (JComboBox)e.getSource();
+		    	        JComboBox<Object> cb = (JComboBox<Object>)e.getSource();
 		    	        int ruleNb = cb.getSelectedIndex();
 		    	        currentRegleNb=ruleNb;
 		    	        updateGraphics(listR.get(ruleNb));
@@ -169,19 +166,25 @@ public class Regles extends JFrame {
 		JPanel p = new JPanel();
 		cases = new CaseButtonBis[9];
 		p.setLayout(new GridLayout(3,3));
-		int i =0;
-		int j =0 ;
+		int i;
+		int j = 0;
+		
 		for(i = 0 ; i < 9 ; i++){
 			if(i==4){
 				CaseButtonBis b = new CaseButtonBis(9);
+				
 				b.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent e) {
+					
+					public void actionPerformed(ActionEvent e) {					
 						buttonDir((CaseButtonBis)e.getSource());
 					}
 				});
+				
 				cases[i]=b;
 				p.add(b);
+				
 			}else{
+				
 			CaseButtonBis b = new CaseButtonBis(order[j]);
 			j++;
 			b.addActionListener(new ActionListener(){
@@ -200,18 +203,30 @@ public class Regles extends JFrame {
 	public void buttonDir(CaseButtonBis source) {
 		Direction d = listR.get(currentRegleNb).getAction();
 		switch(d){
-		case BAS : 		d = Direction.GAUCHE; 	break;
-		case HAUT :		d = Direction.DROITE;	break;	
-		case GAUCHE : 	d = Direction.HAUT	;	break;
-		case DROITE : 	d = Direction.BAS	;	break;
-	default:
-		break;
+			case BAS : 		
+				d = Direction.GAUCHE; 	
+				break;
+				
+			case HAUT :		
+				d = Direction.DROITE;	
+				break;	
+			case GAUCHE : 	
+				d = Direction.HAUT;	
+				break;
+			case DROITE : 	
+				d = Direction.BAS;	
+				break;
+		default:
+			break;
 		}
+		
 		String s = listCond.get(currentRegleNb);
 		Regle r = new Regle(new Observation(s),d);
+		
 		listCond.set(currentRegleNb,properString(r.toString()));
 		listCondDir.set(currentRegleNb,currentRegleNb +") " + s);
 		listR.set(currentRegleNb,r);
+		
 		updateGraphics(r);
 		}
 	
@@ -316,10 +331,15 @@ public class Regles extends JFrame {
 		repaint();
 	}
 	
+	
+	// USE insertItemAt et removeItemAt
+	
+	
 	private void updateComboBox(){
 		sidePanel.remove(listPanel);
 		listPanel = new JPanel();
-		optionList = new JComboBox(listCondDir.toArray());
+		optionList = new JComboBox<Object>();
+		optionList.addItem(listCondDir);
 		optionList.setPreferredSize(new Dimension(200,30));
 		optionList.setSelectedIndex(currentRegleNb);
 		listPanel.add(optionList);
@@ -360,7 +380,7 @@ public class Regles extends JFrame {
 		list.add(r3);
 		list.add(r4);
 		list.add(r5);
-		new Regles(list);
+		new RuleBuilder(list);
 		
 	}
 }
