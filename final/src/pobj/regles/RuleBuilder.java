@@ -46,13 +46,13 @@ public class RuleBuilder extends JFrame {
 	
 	private  final int[] order = {7,0,1,6,2,5,4,3,8};
 
-	JPanel listPanel , sidePanel , buttonPanel , secPanel;
+	JPanel listPanel , bottomPanel , buttonPanel , secPanel;
 	private int currentRegleNb = 0;
 
 
 	public RuleBuilder(ArrayList<Regle> r){
 		super();
-		this.setLayout(new GridLayout(1,2));
+		this.setLayout(new GridLayout(2,1));
 		listR = r;	
 		int i = 0;
 		
@@ -62,7 +62,7 @@ public class RuleBuilder extends JFrame {
 			i++;
 		}
 		createButtons();
-		sidePanel();
+		bottomPanel();
 		updateGraphics(listR.get(0));
 		this.setVisible(true);
 		this.pack();		
@@ -70,13 +70,13 @@ public class RuleBuilder extends JFrame {
 	
 	// SIDE PANEL 
 	
-	public void sidePanel(){
-		sidePanel = new JPanel();
-		sidePanel.setLayout(new GridLayout(3,1));
+	public void bottomPanel(){
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new GridLayout(3,1));
+		listPanel();
 		ButtonPanel();
 		secPanel();
-		listPanel();
-		add(sidePanel);
+		add(bottomPanel);
 	}
 	
 	// BUTTON PANEL CREATOR 
@@ -114,7 +114,7 @@ public class RuleBuilder extends JFrame {
 		buttonPanel.add(any);
 		buttonPanel.add(point);
 		buttonPanel.add(vide);
-		sidePanel.add(buttonPanel);
+		bottomPanel.add(buttonPanel);
 	}
 	
 	// SECOND PANEL ADD AND REMOVE BUTTON
@@ -139,7 +139,7 @@ public class RuleBuilder extends JFrame {
 		});	
 		secPanel.add(add);
 		secPanel.add(remove);
-		sidePanel.add(secPanel);
+		bottomPanel.add(secPanel);
 		
 	}
 	
@@ -151,17 +151,18 @@ public class RuleBuilder extends JFrame {
 		for(int i = 0 ; i < listCondDir.size() ; i++ ){
 			optionList.addItem(listCondDir.get(i));
 		}
-		optionList.setPreferredSize(new Dimension(200,30));
+		optionList.setPreferredSize(new Dimension(250,30));
 		listPanel.add(optionList);
 		optionList.addActionListener(new ActionListener()
 		    {
 		    	  public void actionPerformed(ActionEvent e) {
-		    	        JComboBox<String> cb = (JComboBox<String>)e.getSource();
+		    	        @SuppressWarnings("unchecked")
+						JComboBox<String> cb = (JComboBox<String>)e.getSource();
 		    	        int ruleNb = cb.getSelectedIndex();
 		    	        currentRegleNb=ruleNb;
 		    	        updateGraphics(listR.get(ruleNb));
 		    }});
-		sidePanel.add(listPanel);	
+		bottomPanel.add(listPanel);	
 	}
 	
 	
@@ -231,7 +232,7 @@ public class RuleBuilder extends JFrame {
 		listCondDir.set(currentRegleNb,currentRegleNb +") " + description);
 		listR.set(currentRegleNb,r);
 		optionList.insertItemAt(listCondDir.get(currentRegleNb), currentRegleNb);
-		//updateGraphics(r);
+		updateGraphics(r);
 		}
 	
 	public void buttonAction(CaseButtonBis c){
