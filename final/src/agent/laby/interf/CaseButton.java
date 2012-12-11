@@ -11,13 +11,13 @@ import javax.swing.JButton;
 import agent.laby.ContenuCase;
 
 /**
- * Un bouton graphique pour représenter l'état d'une cellule du labyrinthe.
+ * Un bouton graphique pour repr��senter l'��tat d'une cellule du labyrinthe.
  * 
- * Son état interne "aspect" est censé refléter l'état du labyrinthe. Pour
+ * Son ��tat interne "aspect" est cens�� refl��ter l'��tat du labyrinthe. Pour
  * intercepter les clicks sur le bouton et les traiter, s'abonner au bouton via
  * addActionListener().
  * 
- * C'est un bouton, on étends {@link JButton}.
+ * C'est un bouton, on ��tends {@link JButton}.
  * 
  * @author Yann
  * 
@@ -30,8 +30,8 @@ class CaseButton extends JButton {
 	// L'aspect de ce bouton
 	private ContenuCase aspect = ContenuCase.VIDE;
 
-	// La position de cette cellule, utile aux clients pour savoir où s'est
-	// passé le clic.
+	// La position de cette cellule, utile aux clients pour savoir o�� s'est
+	// pass�� le clic.
 	private final Point position;
 
 	// vrai si cette case est la position initiale.
@@ -68,7 +68,7 @@ class CaseButton extends JButton {
 	}
 
 	/**
-	 * Mise à jour des caractéristiques graphiques en fonction de "aspect".
+	 * Mise �� jour des caract��ristiques graphiques en fonction de "aspect".
 	 */
 	private void updateGraphics() {
 		if (isInit) {
@@ -95,18 +95,17 @@ class CaseButton extends JButton {
 		case AGENT:
 			setBackground(Color.blue);
 			setIcon(new ImageIcon("agent.jpg"));
-			setIcon(null);
 			break;
 
 		}
 		
-		// inciter à repeindre cet objet à la prochaine occasion
+		// inciter �� repeindre cet objet �� la prochaine occasion
 		repaint();
 	}
 
 	/**
-	 * Rend la position de ce bouton. Utile aux clients qui implémentent
-	 * {@link ActionListener} pour savoir où s'est passé le clic.
+	 * Rend la position de ce bouton. Utile aux clients qui impl��mentent
+	 * {@link ActionListener} pour savoir o�� s'est pass�� le clic.
 	 * 
 	 * @return la position dans le labyrinthe
 	 */
