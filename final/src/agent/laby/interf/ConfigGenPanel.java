@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -23,8 +26,12 @@ import org.xml.sax.SAXException;
 
 
 import pobj.algogen.adapter.agent.ControleurIndividuAdapter;
+import pobj.regles.RuleBuilder;
 import pobj.util.Configuration;
 
+import agent.Simulation;
+import agent.control.Controleur;
+import agent.control.IControleur;
 import agent.laby.AlgoGenParameter;
 import agent.laby.Labyrinthe;
 import agent.laby.ProgressPanel;
@@ -57,6 +64,7 @@ public class ConfigGenPanel extends JPanel {
 	private JButton saveConfigButton;
 	private JButton loadConfigButton;
 	private JButton resetConfigButton;
+	private JButton ruleEdit;
 	private JLabel totalPointsLabel = new JLabel("Total: ");
 	private JLabel totalPointsValue;
 	private JLabel reachedPointsLabel = new JLabel("Obtenus: ");
@@ -83,6 +91,8 @@ public class ConfigGenPanel extends JPanel {
 	private int nbIndividus;
 	private int nbGen;
 	private int nbRules;
+
+
 	
 	
 	public ConfigGenPanel(Labyrinthe laby) {
@@ -264,8 +274,63 @@ public class ConfigGenPanel extends JPanel {
 		
 	});
 	
+	ruleEdit = new JButton("ruleEdit");
+	buttonsPanel.add(ruleEdit);
+	ruleEdit.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Controleur c = (Controleur) controleur.getValeurPropre();
+			JFrame rb = new RuleBuilder(c.getRuleset());
+			rb.addWindowListener(new WindowListener(){
+
+				
+				public void windowOpened(WindowEvent e) {				}
+
+				@Override
+				public void windowClosing(WindowEvent e) {
+					Simulation sim = new Simulation(laby,(IControleur) controleur.getValeurPropre());
+					int x = sim.mesurePerf(nbSteps);
+					System.out.println(x);
+					reachedPointsValue.setText(x + " Points");
+					efficacityValue.setText(x/laby.getNbPoints() * 100  + "%");
+				}
+
+				@Override
+				public void windowClosed(WindowEvent e) {			
+				}
+
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
+		
+	});
 	
 	}
+	
 	private void resetConfig()
 	{
 		Configuration config = Configuration.getInstance();

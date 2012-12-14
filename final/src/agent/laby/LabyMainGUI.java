@@ -10,7 +10,7 @@ public class LabyMainGUI {
 
 	public static void main(String[] args) {
 		Configuration config = Configuration.getInstance();
-		config.setParameterValue(AlgoGenParameter.LABY,"all_in.mze");
+		config.setParameterValue(AlgoGenParameter.LABY,"complex.mze");
 		String labyFile = "mazes/"+config.getParameterValue(AlgoGenParameter.LABY); // args[0];
 		Labyrinthe laby;
 		try {

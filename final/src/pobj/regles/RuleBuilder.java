@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import javax.swing.ImageIcon;
@@ -20,6 +21,7 @@ import agent.control.Observation;
 import agent.control.Regle;
 import agent.laby.ContenuCase;
 import agent.laby.interf.CaseButtonBis;
+import agent.laby.interf.ConfigGenPanel;
 
 public class RuleBuilder extends JFrame {
 
@@ -37,12 +39,13 @@ public class RuleBuilder extends JFrame {
 	private JButton any ;
 	private JButton add ;
 	private JButton remove;
+
 	
 	private char swap = '#';
 	
 	private ArrayList<String>listCond =  new ArrayList<String>();
 	private ArrayList<String>listCondDir  = new ArrayList<String>();
-	private ArrayList<Regle>listR;
+	private List<Regle>listR;
 	
 	private  final int[] order = {7,0,1,6,2,5,4,3,8};
 
@@ -50,10 +53,10 @@ public class RuleBuilder extends JFrame {
 	private int currentRegleNb = 0;
 
 
-	public RuleBuilder(ArrayList<Regle> r){
+	public RuleBuilder(List<Regle> list){
 		super();
 		this.setLayout(new GridLayout(2,1));
-		listR = r;	
+		listR = list;
 		int i = 0;
 		
 		while(i < listR.size()){
@@ -65,7 +68,7 @@ public class RuleBuilder extends JFrame {
 		bottomPanel();
 		updateGraphics(listR.get(0));
 		this.setVisible(true);
-		this.pack();		
+		this.pack();
 	}
 	
 	// SIDE PANEL 
@@ -350,24 +353,5 @@ public class RuleBuilder extends JFrame {
 		listCondDir.add(i +") " +properString(listR.get(i).toString()));
 		i++;
 		}
-	}
-	
-	public static void main(String[]args){
-		Regle r = new Regle(new Observation(".?# ?#.#"), Direction.HAUT);
-		
-		Regle r1 = new Regle(new Observation("....... "), Direction.BAS);
-		Regle r2 = new Regle(new Observation("........"), Direction.BAS);
-		Regle r3 = new Regle(new Observation(".......?"), Direction.BAS);
-		Regle r4 = new Regle(new Observation(".....#.#"), Direction.BAS);
-		Regle r5 = new Regle(new Observation("....??.#"), Direction.BAS);
-		ArrayList<Regle> list = new ArrayList<Regle>();
-		list.add(r);
-		list.add(r1);
-		list.add(r2);
-		list.add(r3);
-		list.add(r4);
-		list.add(r5);
-		new RuleBuilder(list);
-		
 	}
 }

@@ -143,5 +143,9 @@ public class Controleur implements IControleur {
 		return true;
 	}
 
+	public List<Regle> getRuleset() {
+		return ruleset;
+	}
+	
 
 }
