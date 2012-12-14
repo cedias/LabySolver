@@ -35,4 +35,12 @@ public class ProgressPanel extends JPanel {
 			progressBar.setString("Finished");
 	}
 	
+	public int getValue(){
+		return progressBar.getValue();
+	}
+	
+	public void setNbMax(int i){
+		nbMax = i;
+	}
+	
 }
