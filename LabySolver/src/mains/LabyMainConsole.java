@@ -1,8 +1,11 @@
-package agent.laby;
+package mains;
 
 import java.io.IOException;
 
 import agent.control.Controleur;
+import agent.laby.AlgoGenParameter;
+import agent.laby.ChargeurLabyrinthe;
+import agent.laby.Labyrinthe;
 import pobj.algogen.Environnement;
 import pobj.algogen.Population;
 import pobj.algogen.adapter.agent.PopulationControleurFactory;
@@ -25,12 +28,13 @@ public class LabyMainConsole {
 		config.setParameterValue(AlgoGenParameter.SELECT_UNIFORME, "true");
 		
 		
-		String labyFile = "mazes/"+config.getParameterValue(AlgoGenParameter.LABY); // args[0];
+		String labyFile = "data/mazes/"+config.getParameterValue(AlgoGenParameter.LABY); // args[0];
 		Labyrinthe laby;
 		try {
 			laby = ChargeurLabyrinthe.chargerLabyrinthe(labyFile);
 		} catch (IOException e) {
 			laby = null;
+			System.out.println("Impossible d'ouvrir le fichier "+ labyFile);
 			System.exit(1);
 		}
 		Environnement<Controleur> env = PopulationControleurFactory.createEnvironnement(laby,Integer.parseInt(config.getParameterValue(AlgoGenParameter.NB_PAS)));
@@ -39,7 +43,6 @@ public class LabyMainConsole {
 		int somme = 0;
 		for(int i=0 ; i<1000 ; i++)
 		{
-			System.out.println("iteration :  "+i);
 			Population<Controleur> pop = PopulationControleurFactory.createRandomPopulation(
 					Integer.parseInt(config.getParameterValue(AlgoGenParameter.TAILLE_POP)),
 					Integer.parseInt(config.getParameterValue(AlgoGenParameter.NB_RULES))

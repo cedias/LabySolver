@@ -1,6 +1,7 @@
 package agent.laby.interf;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -64,7 +66,7 @@ public class ConfigGenPanel extends JPanel {
 	private JButton saveConfigButton;
 	private JButton loadConfigButton;
 	private JButton resetConfigButton;
-	private JButton ruleEdit;
+	private JButton ruleEditButton;
 	private JLabel totalPointsLabel = new JLabel("Total: ");
 	private JLabel totalPointsValue;
 	private JLabel reachedPointsLabel = new JLabel("Obtenus: ");
@@ -202,6 +204,8 @@ public class ConfigGenPanel extends JPanel {
 		
 		rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.X_AXIS));		
+		rightPanel.add(Box.createRigidArea(new Dimension(60,0)));
+		
 		
 		rightPanelLabel = new JPanel();
 		rightPanelLabel.setLayout(new BoxLayout(rightPanelLabel, BoxLayout.Y_AXIS));
@@ -225,7 +229,7 @@ public class ConfigGenPanel extends JPanel {
 		
 		cardPanel.add(rightPanel,"rightPanel");
 		cardLayout.show(cardPanel, "rightPanel");
-		progressPanel = new ProgressPanel(nbGen);
+		progressPanel = new ProgressPanel();
 		cardPanel.add(progressPanel,"progressPanel");
 		
 		
@@ -234,7 +238,7 @@ public class ConfigGenPanel extends JPanel {
 	private void createButtonsPanel()
 	{
 	buttonsPanel = new JPanel();
-	buttonsPanel.setLayout(new BoxLayout(buttonsPanel,BoxLayout.Y_AXIS));
+	buttonsPanel.setLayout(new GridLayout(4,1));
 	add(buttonsPanel);
 	
 	saveConfigButton = new JButton("Sauvegarder");
@@ -265,12 +269,11 @@ public class ConfigGenPanel extends JPanel {
 			try {
 				loadConfig();
 			} catch (IOException e) {
+				// TODO Handle Exception (i.e show error window)
 				e.printStackTrace();
 			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -288,9 +291,9 @@ public class ConfigGenPanel extends JPanel {
 		
 	});
 	
-	ruleEdit = new JButton("ruleEdit");
-	buttonsPanel.add(ruleEdit);
-	ruleEdit.addActionListener(new ActionListener(){
+	ruleEditButton = new JButton("Editeur de Règles");
+	buttonsPanel.add(ruleEditButton);
+	ruleEditButton.addActionListener(new ActionListener(){
 
 		@Override
 		public void actionPerformed(ActionEvent e) {

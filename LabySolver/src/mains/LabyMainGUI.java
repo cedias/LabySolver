@@ -1,9 +1,12 @@
-package agent.laby;
+package mains;
 
 import java.io.IOException;
 
 import pobj.util.Configuration;
 
+import agent.laby.AlgoGenParameter;
+import agent.laby.ChargeurLabyrinthe;
+import agent.laby.Labyrinthe;
 import agent.laby.interf.LabyViewer;
 
 public class LabyMainGUI {
