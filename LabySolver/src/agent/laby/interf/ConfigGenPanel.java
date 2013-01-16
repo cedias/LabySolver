@@ -377,7 +377,7 @@ public class ConfigGenPanel extends JPanel {
 		config.setParameterValue(AlgoGenParameter.NB_RULES, nbRulesSlider.getValue() + "");
 		config.setParameterValue(AlgoGenParameter.TAILLE_POP, individuSlider.getValue() + "");
 		
-		JFileChooser fc = new JFileChooser("./configs");
+		JFileChooser fc = new JFileChooser("./data/configs");
 		int returnVal = fc.showSaveDialog(null);
 
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -388,7 +388,7 @@ public class ConfigGenPanel extends JPanel {
 	private void loadConfig() throws IOException, ParserConfigurationException, SAXException
 	{
 		
-		JFileChooser fc = new JFileChooser("./configs");
+		JFileChooser fc = new JFileChooser("./data/configs");
 		int returnVal = fc.showOpenDialog(null);
 
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {

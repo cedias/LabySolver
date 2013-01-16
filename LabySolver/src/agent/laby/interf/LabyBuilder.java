@@ -125,11 +125,11 @@ public class LabyBuilder extends JFrame {
 		sidePanel.add(spaceButton);
 		
 		JButton dotButton = new JButton("point");
-		dotButton.setIcon(new ImageIcon("dot.jpg"));
+		dotButton.setIcon(new ImageIcon("data/images/dot.jpg"));
 		sidePanel.add(dotButton);
 		
 		JButton wallButton = new JButton("mur");
-		wallButton.setIcon(new ImageIcon("wall.jpg"));
+		wallButton.setIcon(new ImageIcon("data/images/wall.jpg"));
 		sidePanel.add(wallButton);
 
 		// Les actions sur les boutons, cette forme anonyme évite les

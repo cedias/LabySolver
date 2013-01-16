@@ -81,7 +81,7 @@ class CaseButton extends JButton {
 		switch (aspect) {
 		case POINT:
 			setBackground(Color.yellow);
-			setIcon(new ImageIcon("dot.jpg"));
+			setIcon(new ImageIcon("data/images/dot.jpg"));
 			break;
 		case VIDE:
 			setBackground(Color.white);
@@ -89,12 +89,12 @@ class CaseButton extends JButton {
 			break;
 		case MUR:
 			setBackground(Color.black);
-			setIcon(new ImageIcon("wall.jpg"));
+			setIcon(new ImageIcon("data/images/wall.jpg"));
 			break;
 		case ANY:
 		case AGENT:
 			setBackground(Color.blue);
-			setIcon(new ImageIcon("agent.jpg"));
+			setIcon(new ImageIcon("data/images/agent.jpg"));
 			break;
 
 		}

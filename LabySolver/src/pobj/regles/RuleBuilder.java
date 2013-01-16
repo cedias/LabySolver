@@ -87,7 +87,7 @@ public class RuleBuilder extends JFrame {
 	private void ButtonPanel(){
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
-		mur = new JButton(new ImageIcon("wall.jpg"));
+		mur = new JButton(new ImageIcon("data/images/wall.jpg"));
 		mur.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				swap = '#';	
@@ -100,7 +100,7 @@ public class RuleBuilder extends JFrame {
 				swap = '?';	
 			}
 		});
-		point = new JButton(new ImageIcon("dot.jpg"));
+		point = new JButton(new ImageIcon("data/images/dot.jpg"));
 		point.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				swap = '.';	
@@ -318,10 +318,10 @@ public class RuleBuilder extends JFrame {
 			if(i == 4){
 				Direction dir = r.getAction();
 				switch(dir){
-					case BAS : 		cases[i].setIcon(new ImageIcon("down.png")); 	break;
-					case HAUT :		cases[i].setIcon(new ImageIcon("up.png"));		break;	
-					case GAUCHE : 	cases[i].setIcon(new ImageIcon("left.png"));	break;
-					case DROITE : 	cases[i].setIcon(new ImageIcon("right.png"));	break;
+					case BAS : 		cases[i].setIcon(new ImageIcon("data/images/down.png")); 	break;
+					case HAUT :		cases[i].setIcon(new ImageIcon("data/images/up.png"));		break;	
+					case GAUCHE : 	cases[i].setIcon(new ImageIcon("data/images/left.png"));	break;
+					case DROITE : 	cases[i].setIcon(new ImageIcon("data/images/right.png"));	break;
 				default:
 					break;
 					}
