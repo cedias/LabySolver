@@ -1,11 +1,5 @@
-LI314
-=====
+#LabySolver
 
-Java:
+# class assignment
 
-Rules:
-
-      1) BRANCH WHENEVER YOU ARE WORKING ON A FEATURE
-      2) THE FOLDER TO WORK IN IS NOW "FINAL" (not tme10)
-      3) HAVE FUN !
 
