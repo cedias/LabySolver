@@ -5,7 +5,7 @@
 - Generic Programming
 - Design Patterns
 - Genetic Algorithm
-- 
+
 ## Usage
 
 1. Compile
