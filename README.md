@@ -7,9 +7,12 @@
 - Genetic Algorithm
 
 ## Usage
+- just run `java -jar LabySolver.jar`
 
-1. Compile
-2. Mains are in package Mains
+## Todo
+- Complete Doc
+- Improve UI
+- Tests + Bugfixes
 
 ## Licence
 
